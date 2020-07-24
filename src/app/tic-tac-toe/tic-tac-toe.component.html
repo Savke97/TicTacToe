@@ -1,0 +1,41 @@
+
+<div class="container" *ngIf="winner != null">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <h2 *ngIf="winner">Player {{winner}} won the game!</h2>
+        </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="winner == null">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <h3>Next one to play is {{nextPlayer}}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="winner == null">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <main>
+                <app-square
+                        *ngFor="let val of squares; let i = index"
+                        [value]="val"
+                        (click)="makeMove(i)"
+                        >
+                </app-square>
+            </main>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <button (click)="newGame()" class="btn btn-success">New Game</button>
+            <button (click)="newGame()" class="btn btn-secondary" [routerLink]="['/']">Back to Menu</button>
+        </div>
+    </div>
+</div>
+

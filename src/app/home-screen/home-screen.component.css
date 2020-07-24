@@ -1,0 +1,13 @@
+.menu-Conteine{
+    margin-top: 100px;
+    z-index: 2;
+}
+button{
+    width: 150px;
+    border-radius: 10px;
+    margin-top: 50px;
+}
+.space{
+    height: 200px;
+    width: auto;
+}

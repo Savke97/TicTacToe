@@ -1,0 +1,23 @@
+input{
+    width: 100%;
+    border: 1px solid #5fa8d3;
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: none;
+}
+.space{
+    height: 200px;
+    width: auto;
+}
+.space2{
+    height: 50px;
+    width: auto;
+}
+label{
+    color: white;
+}
+button{
+    border-radius: 10px;
+}
