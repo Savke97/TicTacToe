@@ -5,12 +5,12 @@
 
             <div class="row">
                  <div class="col d-flex justify-content-center">
-                    <button class="btn btn-success" [routerLink]="['/TicTacToe']">Play</button>
+                    <button class="btn btn-success" [routerLink]="['/TicTacToe']" [disabled]="servise.disable">Play</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col d-flex justify-content-center">
-                    <button class="btn btn-dark" [routerLink]="['/CreatePlayer']">Create Player</button>
+                    <button class="btn btn-dark" [routerLink]="['/CreatePlayer']" [disabled]="!servise.disable">Create Player</button>
                 </div>
             </div>
             <div class="row">

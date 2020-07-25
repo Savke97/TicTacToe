@@ -11,6 +11,7 @@ import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SquareComponent } from './square/square.component';
+import { ServiseService } from './servise.service';
 
 
 
@@ -41,7 +42,7 @@ const appRouts: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRouts),
   ],
-  providers: [],
+  providers: [ServiseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
