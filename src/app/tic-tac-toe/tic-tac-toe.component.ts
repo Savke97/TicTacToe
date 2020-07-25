@@ -11,6 +11,7 @@ export class TicTacToeComponent implements OnInit {
   xIsNext: boolean;
   winner: string;
   nextPlayer: String = 'X';
+  conterOfClicks: number = 0;
 
   constructor() { }
 
@@ -21,27 +22,27 @@ export class TicTacToeComponent implements OnInit {
 
   //pokretanje nove igre
   newGame(){
-
     this.squares = Array(9).fill(null);
     this.winner = null;
     this.xIsNext = true;
+    this.conterOfClicks = 0;
   }
 
   //Odtedjuje koji je player na redu, tj znak
   get player(){
-
     return this.xIsNext ? 'X' : 'O';
   }
 
   //Izbacivanje opcije da se klikne na vec kliknutu kocku
   makeMove(index: number){
 
-    if(!this.xIsNext){
+    this.conterOfClicks++;
 
+    //Ispituje ko igra sledeci
+    if(!this.xIsNext){
       this.nextPlayer = 'X';
     }
     else{
-
       this.nextPlayer = 'O';
     }
 
@@ -54,6 +55,11 @@ export class TicTacToeComponent implements OnInit {
       }
   
       this.winner = this.calculateWinner();
+
+      //Provera da li je svako polje popunjeno i da nema pobedinka, ako je tacno restartuje sve
+      if(this.conterOfClicks == 9 && this.winner == null){
+        this.newGame();
+      }
     }
   }
 

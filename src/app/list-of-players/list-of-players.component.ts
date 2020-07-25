@@ -7,7 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListOfPlayersComponent implements OnInit {
 
-  constructor() { }
+  squares: any = [
+    {
+      name: 'Bojan',
+      score: '20'
+    },
+    {
+      name: 'Laki',
+      score: '25'
+    },
+    {
+      name: 'Uros',
+      score: '19'
+    },
+  ];
+
+  constructor() {
+   }
 
   ngOnInit(): void {
   }

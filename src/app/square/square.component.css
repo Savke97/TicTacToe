@@ -4,3 +4,9 @@ button{
     font-size: 100px;
     color: white;
 }
+
+@media(max-width:600px){
+    button{
+        font-size: 50px;
+    }
+}

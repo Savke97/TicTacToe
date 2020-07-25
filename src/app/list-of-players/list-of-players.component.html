@@ -1,0 +1,30 @@
+<div class="space"></div>
+<div class="player">
+    <div class="players">
+       Players
+        <hr>
+    </div>
+    <div class="score">
+        Scores
+        <hr>
+    </div>
+</div>
+
+<div class="player" *ngFor="let item of squares">
+    <div class="players">
+        {{item.name}}
+    </div>
+    <div class="score">
+        {{item.score}}
+    </div>
+</div>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <button  class="btn btn-secondary" [routerLink]="['/']">Back to Menu</button>
+        </div>
+    </div>
+</div>

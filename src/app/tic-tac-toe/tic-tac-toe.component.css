@@ -18,3 +18,14 @@ app-square{
     border: 1px solid gray;
     height: 200px;
 }
+
+@media(max-width:600px){
+
+    main{
+        grid-template-columns: 100px 100px 100px;
+    }
+
+    app-square{
+        height: 100px;
+    }
+}
