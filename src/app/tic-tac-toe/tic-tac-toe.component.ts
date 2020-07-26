@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiseService } from '../servise.service';
 
 @Component({
   selector: 'app-tic-tac-toe',
@@ -12,11 +13,11 @@ export class TicTacToeComponent implements OnInit {
   winner: string;
   nextPlayer: String = 'X';
   conterOfClicks: number = 0;
+  name: String = '';
 
   constructor() { }
 
   ngOnInit(): void {
-
     this.newGame();
   }
 

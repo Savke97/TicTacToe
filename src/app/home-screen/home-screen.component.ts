@@ -9,8 +9,6 @@ import { ServiseService } from '../servise.service';
 })
 export class HomeScreenComponent implements OnInit {
 
-  disable: Boolean = true;
-
   constructor(public route: ActivatedRoute, public servise: ServiseService) { }
 
   ngOnInit(): void {

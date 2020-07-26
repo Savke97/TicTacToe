@@ -13,7 +13,7 @@ export class CreatePlayerComponent implements OnInit {
   key: string;
 
  
-  constructor(private http: HttpClient, private servis: ServiseService) { }
+  constructor(private servis: ServiseService) { }
 
   ngOnInit(): void {
    
@@ -35,13 +35,6 @@ export class CreatePlayerComponent implements OnInit {
        localStorage.setItem('name', player_Name);
      })
 
-      this.servis.createBoard(this.key).subscribe(res => {
-        /* console.log(res) */
-     })
-
-      this.servis.onBoards(this.key).subscribe(res => {
-       console.log(res)
-     })
    //U slucaju da je vec napravljen apikey
     }else{
       alert("Vec si kreirao pleyera!");
