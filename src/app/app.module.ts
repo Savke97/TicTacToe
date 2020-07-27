@@ -12,6 +12,7 @@ import { HomeScreenComponent } from './home-screen/home-screen.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SquareComponent } from './square/square.component';
 import { ServiseService } from './servise.service';
+import { WebSocketService } from './web-socket.service';
 
 
 
@@ -42,7 +43,7 @@ const appRouts: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRouts),
   ],
-  providers: [ServiseService],
+  providers: [ServiseService, WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

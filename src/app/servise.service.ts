@@ -9,8 +9,10 @@ export class ServiseService {
   constructor(private http: HttpClient) { }
 
   disable: Boolean = true;
-  name: String = '';
-
+  idOfPlayer: string;
+  bordsCreatedId: any[] = [];
+  players: any[] = [];
+  
   registerCandidate(apikey: String){
       return this.http.post<any>('http://178.128.206.150:7000/register_candidate',{apikey});
   }

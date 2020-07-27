@@ -12,12 +12,9 @@ export class CreatePlayerComponent implements OnInit {
 
   key: string;
 
- 
   constructor(private servis: ServiseService) { }
 
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {}
 
   
   onSubmit(form: NgForm){
@@ -32,12 +29,28 @@ export class CreatePlayerComponent implements OnInit {
 
      //Kreiranje playera
       this.servis.player(player_Name, this.key).subscribe(res => {
-       localStorage.setItem('name', player_Name);
+       localStorage.setItem('playerName', player_Name);
+       localStorage.setItem('playerId', res.id);
      })
+
+     //Kreiranje Borda
+     this.servis.createBoard(this.key).subscribe(res => {
+      localStorage.setItem('idOfBord', res.id);
+    })
+
+    //Kreiranje id bordova i kolicine playera
+    this.servis.onBoards(this.key).subscribe((res) => {
+      res.forEach((el) => {
+        this.servis.bordsCreatedId.push(el.id);
+        this.servis.players.push(el.players);
+      })
+      localStorage.setItem('idOfBords', JSON.stringify(this.servis.bordsCreatedId));
+      localStorage.setItem('players:', JSON.stringify(this.servis.players));
+    })
 
    //U slucaju da je vec napravljen apikey
     }else{
-      alert("Vec si kreirao pleyera!");
+      alert("You've already created a player!");
     }  
   }
 
