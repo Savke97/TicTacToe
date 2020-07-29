@@ -9,24 +9,23 @@ export class WebSocketService {
 
   socket: any;
 
-  constructor() { 
+  constructor() {
 
     let playerId = localStorage.getItem('playerId');
-    console.log(playerId);
-    this.socket = io(`http://178.128.206.150:7000/?id=${playerId}`)
+    this.socket = io(`http://178.128.206.150:7000/${playerId ? `?id=${playerId}` : ''}`)
   }
 
 
-  listen(eventName: string){
-      return new Observable((sub) => {
-        this.socket.on(eventName, (data) => {
-          sub.next(data);
-        })
-      });
+  listen(eventName: string) {
+    return new Observable((sub) => {
+      this.socket.on(eventName, (data) => {
+        sub.next(data);
+      })
+    });
   }
 
-  emit(eventName: string, data: any){
-    this.socket.emit(eventName, data, (res) => {
-      console.log(`Ack: ${res}`)
-  });
+  emit(eventName: string, data: any) {
+    this.socket.emit(eventName, data);
+  };
 }
+

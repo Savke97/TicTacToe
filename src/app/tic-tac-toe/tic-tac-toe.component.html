@@ -34,7 +34,8 @@
     <div class="row">
         <div class="col d-flex justify-content-center">
             <button (click)="newGame()" class="btn btn-success">New Game</button>
-            <button (click)="newGame()" class="btn btn-secondary" [routerLink]="['/']">Back to Menu</button>
+            <button class="btn btn-danger" [routerLink]="['/']">Back to Menu</button>
+            <button class="btn btn-secondary" (click)="oneLeaveSeat()">Leave Seat</button>
         </div>
     </div>
 </div>

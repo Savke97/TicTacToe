@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ServiseService } from '../servise.service';
 import { WebSocketService } from '../web-socket.service';
-import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tic-tac-toe',
@@ -16,56 +16,73 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
   nextPlayer: String = 'X';
   conterOfClicks: number = 0;
   playerName: String = '';
+  a: any;
 
-  constructor(private servise: ServiseService, private socket: WebSocketService) { }
+  constructor(private servise: ServiseService, private webSocket: WebSocketService, public route: ActivatedRoute) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    
+    this.route.params.subscribe(res => {
+      this.webSocket.emit('join_room', res.idOfBoard);
+    })
+    this.webSocket.listen('joined').subscribe((res) => {
+      this.a = res;
+      alert("Game joind: " + this.a.player.name)
+    })
     this.newGame();
     this.servise.idOfPlayer = localStorage.getItem('idPlayer');
     this.playerName = localStorage.getItem('name');
   }
 
-  ngOnDestroy(): void {
-    
-    let bordId = localStorage.getItem('idOfBord')
-    /* this.socket.emit('leave_room', bordId); */
+
+
+  ngOnDestroy() {
+    this.route.params.subscribe(res => {
+      this.webSocket.emit('leave_room', res.idOfBoard);
+    })
   }
 
+
+  oneLeaveSeat(){
+    this.route.params.subscribe(res => {
+      this.webSocket.emit('leave_seat', res.idOfBoard);
+    })
+
+    this.webSocket.listen('seat_left').subscribe((res) => {
+      this.a = res;
+      alert("Seat left: " + this.a.player.name)
+    })
+  }
+
+
   //pokretanje nove igre
-  newGame(){
-    
+  newGame() {
     this.squares = Array(9).fill(null);
     this.winner = null;
     this.xIsNext = true;
-    this.conterOfClicks = 0;    
+    this.conterOfClicks = 0;
   }
 
   //Odtedjuje koji je player na redu, tj znak
-  get player(){
+  get player() {
     return this.xIsNext ? 'X' : 'O';
   }
 
   //Izbacivanje opcije da se klikne na vec kliknutu kocku
-  makeMove(index: number){
-
+  makeMove(index: number) {
     this.conterOfClicks++;
-
     //Ispituje ko igra sledeci
 
     (!this.xIsNext) ? this.nextPlayer = 'X' : this.nextPlayer = 'O';
-
-    if(!this.winner){
-
-      if(!this.squares[index]){
-        
+    if (!this.winner) {
+      if (!this.squares[index]) {
         this.squares.splice(index, 1, this.player);
         this.xIsNext = !this.xIsNext;
       }
-  
-      this.winner = this.calculateWinner();
 
+      this.winner = this.calculateWinner();
       //Provera da li je svako polje popunjeno i da nema pobedinka, ako je tacno restartuje sve
-      if(this.conterOfClicks == 9 && this.winner == null){
+      if (this.conterOfClicks == 9 && this.winner == null) {
         this.newGame();
       }
     }
@@ -73,7 +90,7 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
 
 
   //Algoritam za proveravanje da li je neko pobedio
-  calculateWinner(){
+  calculateWinner() {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -85,15 +102,12 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
       [2, 4, 6],
     ]
 
-    for(let i = 0; i < lines.length; i++){
-
+    for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
-      if(this.squares[a] && this.squares[a] === this.squares[b] && this.squares[a] === this.squares[c]){
-
-        return  this.squares[a];
+      if (this.squares[a] && this.squares[a] === this.squares[b] && this.squares[a] === this.squares[c]) {
+        return this.squares[a];
       }
     }
-
     return null;
   }
 

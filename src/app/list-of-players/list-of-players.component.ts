@@ -5,27 +5,18 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './list-of-players.component.html',
   styleUrls: ['./list-of-players.component.css']
 })
-export class ListOfPlayersComponent implements OnInit {
 
-  squares: any = [
-    {
-      name: 'Bojan',
-      score: '20'
-    },
-    {
-      name: 'Laki',
-      score: '25'
-    },
-    {
-      name: 'Uros',
-      score: '19'
-    },
-  ];
+export class ListOfPlayersComponent implements OnInit {
+  squares;
+  myBord;
+
 
   constructor() {
-   }
+  }
 
   ngOnInit(): void {
+    this.squares = JSON.parse(localStorage.getItem('ListOfBoards'));
+    this.myBord = localStorage.getItem('idOfBord');
   }
 
 }

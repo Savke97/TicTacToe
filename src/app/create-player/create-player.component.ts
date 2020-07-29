@@ -11,47 +11,36 @@ import { ServiseService } from '../servise.service';
 export class CreatePlayerComponent implements OnInit {
 
   key: string;
-
   constructor(private servis: ServiseService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  
-  onSubmit(form: NgForm){
-      this.key = '539c9ba0-9543-472f-8a3a-47bb29426a65';
-      let player_Name = form.value.name;
 
-    if(!localStorage.getItem('apikey')){
-      //kreiranje apikey
+  onSubmit(form: NgForm) {
+    this.key = '539c9ba0-9543-472f-8a3a-47bb29426a66';
+
+    localStorage.setItem('givenApiKey', this.key);
+
+
+    let player_Name = form.value.name;
+
+    if (!localStorage.getItem('apikey')) {
+
+      this.servis.disable = true;
+
       this.servis.registerCandidate(this.key).subscribe(res => {
-        localStorage.setItem('apikey', res.apikey);
-     })
+       
+        this.servis.player(player_Name, res.apikey).subscribe(res => {
+          localStorage.setItem('playerName', player_Name);
+          localStorage.setItem('playerId', res.id);
+        })
 
-     //Kreiranje playera
-      this.servis.player(player_Name, this.key).subscribe(res => {
-       localStorage.setItem('playerName', player_Name);
-       localStorage.setItem('playerId', res.id);
-     })
+        this.servis.createBoard(this.key).subscribe(res => {
+          localStorage.setItem('idOfBord', res.id);
+        })
 
-     //Kreiranje Borda
-     this.servis.createBoard(this.key).subscribe(res => {
-      localStorage.setItem('idOfBord', res.id);
-    })
-
-    //Kreiranje id bordova i kolicine playera
-    this.servis.onBoards(this.key).subscribe((res) => {
-      res.forEach((el) => {
-        this.servis.bordsCreatedId.push(el.id);
-        this.servis.players.push(el.players);
       })
-      localStorage.setItem('idOfBords', JSON.stringify(this.servis.bordsCreatedId));
-      localStorage.setItem('players:', JSON.stringify(this.servis.players));
-    })
-
-   //U slucaju da je vec napravljen apikey
-    }else{
-      alert("You've already created a player!");
-    }  
+    }
   }
 
 }

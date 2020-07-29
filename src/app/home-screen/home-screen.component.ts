@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServiseService } from '../servise.service';
 import { WebSocketService } from '../web-socket.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home-screen',
@@ -9,35 +10,37 @@ import { WebSocketService } from '../web-socket.service';
   styleUrls: ['./home-screen.component.css']
 })
 export class HomeScreenComponent implements OnInit, AfterViewInit {
+  servise: Boolean = true;
+  playerRegistred: String;
+  a: any;
 
-  private socket: any;
 
-  constructor(public route: ActivatedRoute, public servise: ServiseService, private soc: WebSocketService) { }
-
-  ngOnInit(): void {
-
-    this.route.params.subscribe(params => {
-      if(localStorage.getItem('apikey')){
-        this.servise.disable = false;
-      }
+  constructor(public route: ActivatedRoute, public router: Router, public service: ServiseService, private webSocket: WebSocketService) { 
+    this.service.onBoards(localStorage.getItem('givenApiKey') || '539c9ba0-9543-472f-8a3a-47bb29426a66').subscribe((res) => {
+      localStorage.setItem('ListOfBoards', JSON.stringify(res))
     })
 
-    let bordId = localStorage.getItem('idOfBord')
-    console.log(this.soc.emit('join_room', bordId));
+    this.playerRegistred = localStorage.getItem('playerName')
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      if (localStorage.getItem('givenApiKey')) {
+        this.servise = false;
+      }
 
-    
+    })
+
+    this.webSocket.listen('left').subscribe((res) => {
+      this.a = res;
+      alert("Game left: " + this.a.player.name)
+    })
   }
 
-  
+  ngAfterViewInit(): void {}
 
-  onPlay(){
-    /* let bordId = localStorage.getItem('idOfBord')
-    this.socket.emit('join_room', bordId, (res) => {
-      console.log(`Ack: ${res}`);
-    }) */
-  }
+
+
+  onPlay() {}
 
 }
